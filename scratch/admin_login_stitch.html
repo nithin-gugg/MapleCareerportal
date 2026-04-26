@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TalentFlow Admin Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#004530",
+                      "on-background": "#2f2f2f",
+                      "on-primary-container": "#005b32",
+                      "primary-fixed-dim": "#2feb8f",
+                      "outline-variant": "#adadad",
+                      "primary-fixed": "#46fa9c",
+                      "tertiary-dim": "#005769",
+                      "on-secondary-fixed-variant": "#006548",
+                      "primary": "#006a3c",
+                      "surface-tint": "#006a3c",
+                      "surface": "#f6f6f6",
+                      "surface-variant": "#dddddd",
+                      "error-container": "#fb5151",
+                      "surface-container-highest": "#dddddd",
+                      "inverse-surface": "#0e0e0e",
+                      "tertiary": "#006478",
+                      "surface-dim": "#d4d4d4",
+                      "tertiary-fixed-dim": "#00c7ec",
+                      "on-tertiary-fixed-variant": "#004e5f",
+                      "on-primary-fixed-variant": "#006639",
+                      "error-dim": "#9f0519",
+                      "on-primary-fixed": "#004625",
+                      "inverse-primary": "#46fa9c",
+                      "background": "#f6f6f6",
+                      "outline": "#777777",
+                      "on-surface": "#2f2f2f",
+                      "tertiary-container": "#00d5fd",
+                      "primary-dim": "#005c33",
+                      "on-tertiary": "#e0f7ff",
+                      "surface-container-high": "#e2e2e2",
+                      "surface-container": "#e8e8e8",
+                      "secondary-container": "#64f6be",
+                      "on-primary": "#cbffd8",
+                      "on-error-container": "#570008",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-container": "#46fa9c",
+                      "on-surface-variant": "#5b5b5b",
+                      "on-secondary": "#c7ffe3",
+                      "surface-container-low": "#f1f1f1",
+                      "error": "#b31b25",
+                      "secondary-dim": "#005b41",
+                      "tertiary-fixed": "#00d5fd",
+                      "secondary-fixed-dim": "#53e7b1",
+                      "on-secondary-container": "#005a40",
+                      "on-tertiary-fixed": "#002f39",
+                      "inverse-on-surface": "#9d9d9d",
+                      "on-error": "#ffefee",
+                      "on-tertiary-container": "#004553",
+                      "secondary": "#00694b",
+                      "surface-bright": "#f6f6f6",
+                      "secondary-fixed": "#64f6be"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dddddd;
+            border-radius: 9999px;
+        }
+        .login-bg {
+            background: radial-gradient(circle at top left, #f1f1f1 0%, #f6f6f6 100%);
+        }
+        .btn-gradient {
+            background: linear-gradient(145deg, #006a3c 0%, #005c33 100%);
+        }
+        .soft-scale {
+            transition: transform 200ms ease-out;
+        }
+        .soft-scale:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface bg-surface selection:bg-primary-container selection:text-on-primary-container">
+<main class="min-h-screen flex items-center justify-center p-6 login-bg">
+<div class="w-full max-w-md">
+<!-- Brand Logo / Identity -->
+<div class="mb-12 text-center">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-primary-container mb-4">
+<span class="material-symbols-outlined text-on-primary-container text-3xl" style="font-variation-settings: 'FILL' 1;">fluid</span>
+</div>
+<h1 class="font-headline text-3xl font-extrabold tracking-tighter text-on-surface">
+                    TalentFlow <span class="text-primary">Admin</span>
+</h1>
+<p class="mt-2 text-on-surface-variant font-medium text-sm tracking-tight">Precision Vitality in Workforce Management</p>
+</div>
+<!-- Login Card -->
+<div class="bg-surface-container-lowest p-10 rounded-xl shadow-[0px_12px_32px_rgba(0,0,0,0.04),0px_4px_8px_rgba(0,0,0,0.04)] relative overflow-hidden">
+<!-- Decorative subtle texture -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+<form class="space-y-6 relative z-10">
+<div class="space-y-2">
+<label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-widest" for="email">Email Address</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-lg" data-icon="alternate_email">alternate_email</span>
+</div>
+<input class="block w-full pl-10 pr-4 py-3 bg-surface-container-low border-0 rounded text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container/40 transition-all sm" id="email" name="email" placeholder="name@company.com" required="" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-widest" for="password">Password</label>
+<a class="text-xs font-medium text-primary hover:text-primary-dim transition-colors" href="#">Forgot Access?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-lg" data-icon="lock">lock</span>
+</div>
+<input class="block w-full pl-10 pr-4 py-3 bg-surface-container-low border-0 rounded text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary-container/40 transition-all sm" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full btn-gradient text-on-primary font-headline font-bold py-4 rounded-lg soft-scale shadow-sm flex items-center justify-center space-x-2" type="submit">
+<span>Secure Access</span>
+<span class="material-symbols-outlined text-lg" data-icon="login">login</span>
+</button>
+</div>
+</form>
+<div class="mt-8 pt-8 border-t border-surface-container flex flex-col items-center space-y-4">
+<p class="text-xs text-on-surface-variant font-medium">Internal administrative use only</p>
+<div class="flex space-x-4">
+<button class="flex items-center space-x-1 text-xs text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="help_center">help_center</span>
+<span>Help Center</span>
+</button>
+<button class="flex items-center space-x-1 text-xs text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="language">language</span>
+<span>System Status</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer / Secondary Navigation Links suppressed for login journey per mandate -->
+<div class="mt-8 text-center px-4">
+<p class="text-[10px] text-outline-variant leading-relaxed">
+                    By continuing, you agree to TalentFlow's Internal Policy and Security protocols. Unauthorized access attempts are monitored and recorded.
+                </p>
+</div>
+</div>
+</main>
+<!-- Side Image Decorative (Hidden on mobile) -->
+<div class="fixed right-0 top-0 h-full w-1/3 hidden lg:block overflow-hidden">
+<div class="w-full h-full bg-surface-container-low flex items-center justify-center relative">
+<img class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="minimalist architectural shot of a bright modern glass office building interior with clean lines and soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ25MjHW8pUPnjxtDzQOgVnRNvj6IabIMBWFqxE06hirK8BOBLUcN0I3-oIlVcQqC5yA__5T6--rXmPAV6exEnSXQk_bvPPikeKpHoAcC3N228nAXGR9xjx1ZjNM422Vi5slqPC1oCQIhZrGwVsGB5J_RehLaeapdxet_QmOcep-2GHoM8XY2FKQlkJOc4KtnGjGU_IbGH7bwaf-9zHQuE9yUgnnH90XQckMF0OPcvV6aLzr8otCJ_cy8yEjOpaoMUnHgWdRSYa6w"/>
+<div class="absolute inset-0 bg-gradient-to-l from-transparent to-surface"></div>
+<div class="absolute inset-0 flex flex-col justify-end p-12 text-on-surface">
+<div class="max-w-xs">
+<span class="inline-block px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold uppercase tracking-widest rounded-full mb-4">v4.2.1 Stable</span>
+<h2 class="font-headline text-2xl font-bold tracking-tight mb-2">Efficiency through Precision.</h2>
+<p class="text-on-surface-variant text-sm leading-relaxed">The next generation of talent acquisition and management, designed for those who demand more from their tools.</p>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,98 @@
+# Maple HRMS - Complete Deployment Guide
+
+## 1. Project Analysis
+*   **Frontend**: Next.js 14 (React) with Tailwind CSS, running on Node.js.
+*   **Backend**: FastAPI (Python 3.11) microservice for ML operations (resume parsing and scoring).
+*   **Database**: PostgreSQL via Supabase with Prisma ORM.
+
+### Build and Start Commands
+*   **Frontend**:
+    *   Install: `npm install`
+    *   Build: `npm run build`
+    *   Start: `npm run start`
+*   **Backend**:
+    *   Install: `pip install -r requirements.txt`
+    *   Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 4`
+
+---
+
+## 2. Step-by-Step Deployment Guide
+
+### A. Backend Deployment on Render (FastAPI)
+1. Create a new account or log in to [Render](https://render.com).
+2. Click **New** -> **Web Service**.
+3. Connect your GitHub repository and select the `Maple HRMS` project.
+4. Configure the service:
+    *   **Name**: `maple-hrms-ml-service`
+    *   **Root Directory**: `ml-service` (Important: do not leave this blank).
+    *   **Environment**: `Python 3`
+    *   **Build Command**: `pip install -r requirements.txt`
+    *   **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+    *   **Plan**: Free or higher (Free might be slow due to cold starts and memory limits, ML models recommend a paid tier with at least 1GB RAM).
+5. Click **Advanced** and add the following Environment Variables:
+    *   `ALLOWED_ORIGINS`: (Leave blank for now, we will update this after deploying the frontend).
+    *   `PYTHON_VERSION`: `3.11.0`
+6. Click **Create Web Service**. Wait for the deployment to succeed. Copy the Render URL (e.g., `https://maple-hrms-ml-service.onrender.com`).
+
+### B. Frontend Deployment on Vercel (Next.js)
+1. Create a new account or log in to [Vercel](https://vercel.com).
+2. Click **Add New** -> **Project**.
+3. Import your `Maple HRMS` GitHub repository.
+4. Configure the project:
+    *   **Framework Preset**: Next.js
+    *   **Root Directory**: `./` (Root directory)
+    *   **Build Command**: `npm run build`
+    *   **Install Command**: `npm install`
+5. Expand **Environment Variables** and add all the necessary keys from your `.env` file (Make sure to replace placeholder values with actual production credentials):
+    *   `DATABASE_URL`: Your Supabase connection pooler URL (Transaction mode / pgbouncer=true).
+    *   `DIRECT_URL`: Your Supabase direct connection URL (Session mode).
+    *   `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase URL.
+    *   `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: Your Supabase publishable key.
+    *   `JWT_SECRET`: A strong, random secure string.
+    *   `GOOGLE_CLIENT_ID`: Your Google OAuth Client ID.
+    *   `GOOGLE_CLIENT_SECRET`: Your Google OAuth Secret.
+    *   `GOOGLE_REDIRECT_URI`: `https://<your-vercel-domain>/api/auth/google/callback`
+    *   `GOOGLE_DRIVE_FOLDER_ID`: The Google Drive Folder ID.
+    *   `GEMINI_API_KEY`: Your Gemini API Key.
+    *   `ML_SERVICE_URL`: The Render URL copied from step A (e.g., `https://maple-hrms-ml-service.onrender.com`).
+    *   `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `FROM_EMAIL`: Your SMTP credentials.
+6. Click **Deploy**. Vercel will build and deploy your application.
+7. Once deployed, copy your new Vercel domain URL.
+
+### C. Final API Connection Setup
+1. Go back to your **Render** dashboard.
+2. Select your `maple-hrms-ml-service`.
+3. Go to **Environment**.
+4. Update the `ALLOWED_ORIGINS` environment variable to include your newly created Vercel domain (e.g., `https://your-vercel-domain.vercel.app`).
+5. Save changes (Render will automatically redeploy or restart the service to apply the environment variables).
+
+---
+
+## 3. Potential Issues & Troubleshooting
+
+*   **CORS Problems**: If the Next.js frontend cannot communicate with the ML service (e.g., resume scoring fails), check the `ALLOWED_ORIGINS` variable in Render. It must exactly match the Vercel URL (without a trailing slash).
+*   **Missing Environment Variables**: 
+    *   Missing `ML_SERVICE_URL` in Vercel will break ML requests.
+    *   Missing Supabase or Direct URLs will break the Vercel build phase (as Prisma generates the client during build).
+    *   Ensure the `GOOGLE_REDIRECT_URI` exactly matches the URI registered in your Google Cloud Console.
+*   **Memory Issues on Render**: The ML service uses `sentence-transformers` and `torch`, which are memory-heavy. The Render Free Tier (512MB RAM) will likely experience Out of Memory (OOM) errors. You will likely need to upgrade the Render instance to at least 1GB or 2GB of RAM.
+*   **Incorrect Scripts**: Ensure the Vercel root directory is `/` and the Render root directory is `/ml-service`. If not explicitly set, the platforms will try to build the wrong files.
+
+---
+
+## 4. Production Improvements
+
+### Security
+*   **Rotate Secrets**: Change the `JWT_SECRET` in production. Do not use the default one from your `.env` file.
+*   **Restrict Google OAuth URI**: Ensure your Google Cloud Console restricts the allowed JavaScript origins and Redirect URIs to ONLY your production Vercel domain.
+*   **Database Access**: Ensure Supabase Row Level Security (RLS) is correctly enabled and configured for public schemas.
+
+### Performance
+*   **Backend Cold Starts**: Render's free tier spins down after 15 minutes of inactivity. For a professional HRMS, upgrade to a paid Render tier so the ML service is always awake.
+*   **Database Pooling**: You are using `pgbouncer=true`. Ensure Supabase pool sizes are properly configured to handle simultaneous connections without exhausting limits.
+*   **Edge Caching**: Leverage Vercel's Edge network for static assets and consider caching API responses that are not user-specific.
+
+### Scalability
+*   **Docker Containerization**: The FastAPI app already has a `Dockerfile`. Instead of Web Services based on code, consider deploying the Docker image to Render or AWS ECS for better environment consistency.
+*   **Asynchronous ML Queues**: Resume parsing and scoring are synchronous. For heavy loads, consider implementing a message queue (like Celery + Redis or AWS SQS) so users aren't waiting for the HTTP request to finish.
+*   **Storage Refactoring**: Relying on Google Drive may hit rate limits at scale. Consider using AWS S3 or Supabase Storage for long-term production file handling.

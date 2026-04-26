@@ -1,13 +1,96 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+  DRAFT
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWED
+  SHORTLISTED
+  REJECTED
+  OFFERED
+}
+
+enum ApplicationStage {
+  APPLIED
+  ASSESSMENT
+  INTERVIEW1
+  INTERVIEW2
+  OFFER
+}
+
+enum InterviewStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  password           String
+  role               Role      @default(ADMIN)
+  googleAccessToken  String?
+  googleRefreshToken String?
+  googleEmail        String?
+  tokenExpiry        DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Job {
+  id           String        @id @default(cuid())
+  title        String
+  slug         String        @unique
+  description  String
+  type         String?       @default("Full-time")
+  skills       Json
+  status       JobStatus     @default(OPEN)
+  createdAt    DateTime      @default(now())
+  applications Application[]
+}
+
+model Application {
+  id           String            @id @default(cuid())
+  name         String
+  email        String
+  phone        String
+  resumeLink   String
+  score        Float?
+  matchingSkills Json?
+  status       ApplicationStatus @default(PENDING)
+  stage        ApplicationStage  @default(APPLIED)
+  jobId        String
+  job          Job               @relation(fields: [jobId], references: [id])
+  interviews   Interview[]
+  createdAt    DateTime          @default(now())
+}
+
+model Interview {
+  id            String          @id @default(cuid())
+  applicationId String
+  application   Application     @relation(fields: [applicationId], references: [id])
+  round         Int
+  date          DateTime
+  meetLink      String?
+  attendees     Json?
+  inviteSent    Boolean         @default(false)
+  status        InterviewStatus @default(SCHEDULED)
+  createdAt     DateTime        @default(now())
 }
