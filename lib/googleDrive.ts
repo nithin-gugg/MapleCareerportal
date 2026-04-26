@@ -57,8 +57,8 @@ export async function uploadResume(file: File, fileName: string): Promise<string
     });
 
     return fileDetails.data.webViewLink!;
-  } catch (_error) {
-    console.error("Google Drive Upload Failed.");
+  } catch (error: any) {
+    console.error("Google Drive Upload Failed:", error?.message || error);
     throw new Error("Failed to upload resume to Google Drive");
   }
 }
@@ -81,8 +81,8 @@ export async function downloadResume(fileId: string): Promise<Buffer> {
     }
     
     return buffer;
-  } catch (_error) {
-    console.error("Google Drive Download Failed.");
+  } catch (error: any) {
+    console.error("Google Drive Download Failed:", error?.message || error);
     throw new Error("Failed to download raw resume from Google Drive for AI scanning.");
   }
 }
