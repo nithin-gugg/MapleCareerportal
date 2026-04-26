@@ -34,8 +34,8 @@ export async function sendEmail({
     });
     console.log("Email sent: %s", info.messageId);
     return { success: true, messageId: info.messageId };
-  } catch (error) {
-    console.error("Email Sending Error:", error);
-    return { success: false, error };
+  } catch (_error) {
+    console.error("Email Sending Failed. Please check SMTP configuration.");
+    return { success: false, error: "SMTP_ERROR" };
   }
 }

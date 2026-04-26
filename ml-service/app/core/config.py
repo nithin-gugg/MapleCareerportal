@@ -1,8 +1,7 @@
-"""
-Core configuration settings loaded from environment variables.
-"""
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
 from functools import lru_cache
+from typing import Union
 
 
 class Settings(BaseSettings):
@@ -19,10 +18,20 @@ class Settings(BaseSettings):
     URL_DOWNLOAD_TIMEOUT: int = 15
 
     # CORS
-    ALLOWED_ORIGINS: list[str] = ["*"]
+    ALLOWED_ORIGINS: Union[list[str], str] = ["*"]
 
-    class Config:
-        env_file = ".env"
+    @field_validator("ALLOWED_ORIGINS", mode="before")
+    @classmethod
+    def parse_allowed_origins(cls, v: Union[str, list[str]]) -> list[str]:
+        if isinstance(v, str):
+            return [item.strip() for item in v.split(",") if item.strip()]
+        return v
+
+    model_config = SettingsConfigDict(
+        env_file=(".env", ".env-local"),
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
 
 
 @lru_cache()

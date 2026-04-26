@@ -1,9 +1,15 @@
 import { google } from "googleapis";
-import fs from "fs";
-import path from "path";
 import { db } from "./db";
 
-const TOKEN_PATH = path.join(process.cwd(), ".google-tokens.json");
+const SYSTEM_TOKENS_KEY = "google_system_tokens";
+
+// Check for required environment variables
+const REQUIRED_ENV_VARS = ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REDIRECT_URI"];
+REQUIRED_ENV_VARS.forEach((varName) => {
+  if (!process.env[varName]) {
+    console.error(`MISSING_CONFIG: Environment variable ${varName} is not set.`);
+  }
+});
 
 // System-level OAuth client (Legacy - used for Google Drive)
 export const oauth2Client = new google.auth.OAuth2(
@@ -18,43 +24,44 @@ export const SCOPES = [
   "https://www.googleapis.com/auth/userinfo.email"
 ];
 
-export function loadSavedTokens() {
+/**
+ * Loads system-level tokens from the database.
+ */
+export async function loadSavedTokens() {
   try {
-    if (fs.existsSync(TOKEN_PATH)) {
-      const tokens = JSON.parse(fs.readFileSync(TOKEN_PATH, "utf-8"));
+    const setting = await db.systemSetting.findUnique({
+      where: { key: SYSTEM_TOKENS_KEY },
+    });
+    if (setting) {
+      const tokens = JSON.parse(setting.value);
       oauth2Client.setCredentials(tokens);
     }
-  } catch (error) {
-    console.error("Error loading saved Google tokens:", error);
+  } catch (_error) {
+    // Sanitize log: don't print the error object which might contain secrets
+    console.error("Failed to load saved Google tokens from database.");
   }
 }
 
-export function saveTokens(tokens: any) {
+/**
+ * Saves system-level tokens to the database.
+ */
+export async function saveTokens(tokens: any) {
   try {
-    fs.writeFileSync(TOKEN_PATH, JSON.stringify(tokens, null, 2));
-  } catch (error) {
-    console.error("Error saving Google tokens:", error);
+    await db.systemSetting.upsert({
+      where: { key: SYSTEM_TOKENS_KEY },
+      update: { value: JSON.stringify(tokens) },
+      create: { key: SYSTEM_TOKENS_KEY, value: JSON.stringify(tokens) },
+    });
+  } catch (_error) {
+    console.error("Failed to save Google tokens to database.");
   }
 }
 
-// Automatically load tokens for the system client
+// Initialize tokens
 loadSavedTokens();
 
 oauth2Client.on("tokens", (tokens) => {
-  if (tokens.refresh_token) {
-    saveTokens(tokens);
-  } else {
-    try {
-      if (fs.existsSync(TOKEN_PATH)) {
-        const existingTokens = JSON.parse(fs.readFileSync(TOKEN_PATH, "utf-8"));
-        saveTokens({ ...existingTokens, ...tokens });
-      } else {
-        saveTokens(tokens);
-      }
-    } catch (e) {
-       console.error("Error updating tokens on refresh:", e);
-    }
-  }
+  saveTokens(tokens);
 });
 
 // User-level OAuth Client logic (For Calendar)
@@ -87,8 +94,8 @@ export async function getUserGoogleAuthClient(userId: string) {
           ...(tokens.expiry_date && { tokenExpiry: new Date(tokens.expiry_date) }),
         },
       });
-    } catch (error) {
-      console.error("Failed to update user tokens on refresh:", error);
+    } catch (_error) {
+      console.error("Failed to update user tokens on refresh in database.");
     }
   });
 

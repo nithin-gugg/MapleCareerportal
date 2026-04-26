@@ -60,7 +60,7 @@ export async function createInterviewEvent({
     if (error.message === "GOOGLE_NOT_CONNECTED") {
       throw error;
     }
-    console.error("Google Calendar Error:", error);
-    throw new Error(error.message || "Failed to create Google Calendar event");
+    console.error("Google Calendar Operation Failed.");
+    throw new Error("Failed to create Google Calendar event");
   }
 }

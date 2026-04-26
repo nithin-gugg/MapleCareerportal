@@ -94,3 +94,8 @@ model Interview {
   status        InterviewStatus @default(SCHEDULED)
   createdAt     DateTime        @default(now())
 }
+
+model SystemSetting {
+  key   String @id
+  value String
+}
