@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     # Request timeout for URL downloads (seconds)
     URL_DOWNLOAD_TIMEOUT: int = 15
 
+    # Hugging Face Inference API (for lightweight semantic similarity)
+    HF_API_TOKEN: str = ""
+    HF_API_URL: str = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
+
     # CORS
     ALLOWED_ORIGINS: Union[list[str], str] = ["*"]
 

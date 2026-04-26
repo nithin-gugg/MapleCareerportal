@@ -1,21 +1,14 @@
-# Core ML + API
+# Core API
 fastapi==0.115.5
 uvicorn[standard]==0.32.1
 python-multipart==0.0.17
 pydantic==2.10.3
 pydantic-settings==2.7.0
 
-# ML Dependencies
-sentence-transformers>=3.3.1
-scikit-learn>=1.5.0
-numpy>=2.1.0
-torch>=2.4.0
-
-
-# PDF Parsing
+# PDF Parsing (Lightweight)
 pdfminer.six==20231228
 
-# HTTP Client (async)
+# HTTP Client for Inference API
 httpx==0.28.1
 
 # Utilities

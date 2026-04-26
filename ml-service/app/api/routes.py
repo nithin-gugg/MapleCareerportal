@@ -1,10 +1,6 @@
 """
 API Routes for the ML Microservice.
-
-Endpoints:
-  GET  /health        → Service health check
-  POST /score         → Score a single resume (file upload or URL)
-  POST /batch-score   → Score multiple resumes in one request
+Refactored for async operations and lightweight health checks.
 """
 import time
 import asyncio
@@ -12,7 +8,6 @@ from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 from typing import Optional
 
 from app.ml.scorer import calculate_score
-from app.ml.model import get_model
 from app.services.pdf_service import (
     extract_text_from_bytes,
     extract_email,
@@ -36,12 +31,11 @@ router = APIRouter()
 
 @router.get("/health", response_model=HealthResponse, tags=["System"])
 async def health_check():
-    """Returns the health status of the service and whether the ML model is in memory."""
-    from app.ml.model import _model
+    """Returns the health status of the service."""
     settings = get_settings()
     return {
         "status": "ok",
-        "model_loaded": _model is not None,
+        "model_loaded": bool(settings.HF_API_TOKEN), # Using API token presence as 'loaded' status
         "version": settings.APP_VERSION,
     }
 
@@ -56,12 +50,6 @@ async def score_resume(
 ):
     """
     Score a candidate's resume against a job description.
-    
-    Accepts resume as either:
-    - **File Upload**: Multipart form with `resume_file`
-    - **URL**: Form field `resume_url` pointing to a public PDF
-
-    Returns a match score from 0–100, extracted contact info, and matched keywords.
     """
     start_time = time.time()
     settings = get_settings()
@@ -88,14 +76,14 @@ async def score_resume(
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
-    # ── 3. Score via ML ───────────────────────────────────────────────────────
+    # ── 3. Score via ML (now async) ───────────────────────────────────────────
     try:
-        result = await asyncio.to_thread(calculate_score, resume_text, jd_text)
-    except RuntimeError as e:
+        result = await calculate_score(resume_text, jd_text)
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
     # Threshold filtering
-    score = result["score"]
+    score = result.get("score", 0.0)
     if score < settings.SCORE_THRESHOLD:
         logger.info(f"Score {score} below threshold {settings.SCORE_THRESHOLD}")
 
@@ -113,7 +101,7 @@ async def score_resume(
             resume_length=len(resume_text),
             email=email,
             phone=phone,
-            matched_keywords=result["matched_keywords"],
+            matched_keywords=result.get("matched_keywords", []),
         ),
     )
 
@@ -127,9 +115,6 @@ async def batch_score_resumes(
 ):
     """
     Score multiple candidate resumes against a single job description.
-    
-    Returns results ranked by score (highest first).
-    Maximum 50 resumes per request.
     """
     start_time = time.time()
 
@@ -140,25 +125,27 @@ async def batch_score_resumes(
 
     async def process_single_resume(resume_file: UploadFile) -> BatchCandidateResult:
         candidate_name = resume_file.filename or "Unknown"
-        # Strip extension for display name
         candidate_name = candidate_name.rsplit(".", 1)[0].replace("_", " ").title()
 
         try:
             file_bytes = await resume_file.read()
             resume_text = await asyncio.to_thread(extract_text_from_bytes, file_bytes)
-            ml_result = await asyncio.to_thread(calculate_score, resume_text, jd_text)
+            
+            # Use await directly for the refactored async scorer
+            ml_result = await calculate_score(resume_text, jd_text)
+            
             email = await asyncio.to_thread(extract_email, resume_text)
             phone = await asyncio.to_thread(extract_phone, resume_text)
 
             return BatchCandidateResult(
                 name=candidate_name,
-                score=ml_result["score"],
-                rank=0,  # Will be set after sorting
+                score=ml_result.get("score", 0.0),
+                rank=0,
                 email=email,
                 phone=phone,
-                matched_keywords=ml_result["matched_keywords"],
+                matched_keywords=ml_result.get("matched_keywords", []),
             )
-        except (ValueError, RuntimeError) as e:
+        except Exception as e:
             logger.warning(f"Skipping '{candidate_name}': {e}")
             return BatchCandidateResult(
                 name=candidate_name,
