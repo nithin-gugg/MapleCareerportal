@@ -10,6 +10,7 @@ const navItems = [
   { label: 'Candidates', href: '/admin/applications', icon: 'group' }, // Mapping 'Candidates' to 'applications' route locally
   { label: 'Job Postings', href: '/admin/jobs', icon: 'work' },
   { label: 'Interviews', href: '/admin/interviews', icon: 'event_available' },
+  { label: 'Calendar', href: '/admin/calendar', icon: 'calendar_month' },
   { label: 'Analytics', href: '/admin/analytics', icon: 'bar_chart' },
   { label: 'Settings', href: '/admin/settings', icon: 'settings' },
 ];
