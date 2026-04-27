@@ -31,11 +31,11 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
       {/* Header / Meta Navigation */}
       <div className="space-y-8">
         <Link 
-          href="/admin" 
+          href="/admin/applications" 
           className="inline-flex items-center gap-2 text-[10px] font-black text-on-surface-variant hover:text-primary uppercase tracking-[0.3em] transition-colors group"
         >
           <span className="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
-          Operational Dashboard
+          All Candidates
         </Link>
         
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-10">
