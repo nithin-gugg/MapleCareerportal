@@ -119,7 +119,7 @@ export default function RichTextEditor({
 
   const insertTemplate = useCallback(() => {
     if (!editor) return;
-    editor.chain().focus().setContent(JD_TEMPLATE, true).run();
+    editor.chain().focus().setContent(JD_TEMPLATE, { emitUpdate: true }).run();
     onChange(JD_TEMPLATE);
   }, [editor, onChange]);
 
