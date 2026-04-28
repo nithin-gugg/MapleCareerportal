@@ -4,15 +4,15 @@ import { db } from "@/lib/db";
 import { slugify } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import DOMPurify from "isomorphic-dompurify";
+import sanitize from "sanitize-html";
 
 /**
  * Sanitize HTML coming from the RichTextEditor before persisting.
  * Strips script tags, on* handlers, and other XSS vectors.
  */
 function sanitizeHtml(raw: string): string {
-  return DOMPurify.sanitize(raw, {
-    ALLOWED_TAGS: [
+  return sanitize(raw, {
+    allowedTags: [
       "p", "br", "strong", "em", "u", "s",
       "h1", "h2", "h3", "h4", "h5", "h6",
       "ul", "ol", "li",
@@ -20,7 +20,12 @@ function sanitizeHtml(raw: string): string {
       "pre", "code",
       "blockquote",
     ],
-    ALLOWED_ATTR: ["href", "target", "rel"],
+    allowedAttributes: {
+      "a": ["href", "target", "rel"],
+    },
+    selfClosing: ["img", "br", "hr", "area", "base", "basefont", "input", "link", "meta"],
+    // URL schemes we permit
+    allowedSchemes: ["http", "https", "mailto", "tel"],
   });
 }
 
