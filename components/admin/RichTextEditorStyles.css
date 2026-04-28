@@ -1,0 +1,124 @@
+/* ─── Tiptap / ProseMirror editor styles ─────────────────────────────────── */
+
+.rte-editor .ProseMirror {
+  min-height: 240px;
+  padding: 1.5rem 2rem;
+  outline: none;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: hsl(var(--on-surface-variant));
+}
+
+/* Placeholder */
+.rte-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--outline-variant));
+  opacity: 0.5;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Headings */
+.rte-editor .ProseMirror h1 {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 2rem 0 0.75rem;
+  color: hsl(var(--on-surface));
+  text-transform: uppercase;
+}
+.rte-editor .ProseMirror h2 {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin: 1.75rem 0 0.6rem;
+  color: hsl(var(--on-surface));
+  text-transform: uppercase;
+}
+.rte-editor .ProseMirror h3 {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 1.5rem 0 0.5rem;
+  color: hsl(var(--on-surface));
+  text-transform: uppercase;
+}
+
+/* Paragraphs */
+.rte-editor .ProseMirror p {
+  margin: 0.75rem 0;
+}
+
+/* Lists */
+.rte-editor .ProseMirror ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+.rte-editor .ProseMirror ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+.rte-editor .ProseMirror li {
+  margin: 0.4rem 0;
+}
+.rte-editor .ProseMirror li::marker {
+  color: #00dc82;
+  font-weight: 800;
+}
+
+/* Links */
+.rte-editor .ProseMirror a {
+  color: #00dc82;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.rte-editor .ProseMirror a:hover {
+  color: hsl(var(--primary));
+}
+
+/* Horizontal rule */
+.rte-editor .ProseMirror hr {
+  border: none;
+  height: 2px;
+  background: hsl(var(--surface-container));
+  margin: 2rem 0;
+}
+
+/* Strong / em */
+.rte-editor .ProseMirror strong { font-weight: 900; color: hsl(var(--on-surface)); }
+.rte-editor .ProseMirror em     { font-style: italic; }
+.rte-editor .ProseMirror u      { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Code inline */
+.rte-editor .ProseMirror code {
+  background: hsl(var(--surface-container));
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Code block */
+.rte-editor .ProseMirror pre {
+  background: hsl(var(--surface-container));
+  border-radius: 1rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+.rte-editor .ProseMirror pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+/* Selection */
+.rte-editor .ProseMirror ::selection {
+  background: rgba(0, 220, 130, 0.2);
+}

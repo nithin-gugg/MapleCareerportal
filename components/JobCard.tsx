@@ -56,10 +56,10 @@ export function JobCard({ job }: JobCardProps) {
 
         <Link
           href={`/jobs/${job.slug}`}
-          className="flex items-center justify-center gap-3 w-full py-4 bg-on-surface text-surface font-headline font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl hover:bg-primary hover:text-on-primary transition-all soft-scale shadow-xl shadow-black/5"
+          className="flex items-center justify-center gap-3 w-full py-4 bg-[#00DC82] text-black font-headline font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl transition-all soft-scale shadow-xl shadow-black/5"
         >
-          View Detailed Slot
-          <span className="material-symbols-outlined text-lg">arrow_forward</span>
+          Apply Now  
+        <span className="material-symbols-outlined text-lg">arrow_forward</span>
         </Link>
       </div>
     </div>

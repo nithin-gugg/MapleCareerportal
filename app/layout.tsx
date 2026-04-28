@@ -31,7 +31,7 @@ export default function RootLayout({
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
       </head>
-      <body className={cn(inter.className, "min-h-screen flex flex-col bg-background text-foreground tracking-tight")}>
+      <body className={cn(inter.variable, manrope.variable, "min-h-screen flex flex-col bg-background text-foreground tracking-tight font-body antialiased")}>
         {children}
         {/* Global toast notifications — updated to match GreenHire theme */}
         <Toaster

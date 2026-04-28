@@ -70,10 +70,17 @@
   }
   body {
     @apply bg-background text-foreground selection:bg-primary/30;
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-manrope), sans-serif;
+    font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  }
+  /* Ensure font utility classes always resolve to their font vars */
+  .font-headline {
+    font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif !important;
+  }
+  .font-body {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif !important;
   }
 }
 
@@ -233,4 +240,97 @@
   padding: 4px 8px 8px;
   border-bottom: 1px solid #e8e8e8;
   margin-bottom: 4px;
+}
+
+/* ─── ProseMirror focus ring ─────────────────────────────────────────────── */
+.ProseMirror:focus {
+  outline: none;
+}
+
+/* ─── Job Description prose overrides (Tailwind Typography) ─────────────── */
+/* Applied via .jd-prose on the job detail page */
+.jd-prose {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  color: hsl(var(--on-surface-variant));
+  font-size: 1.25rem; /* text-xl to match original design */
+  line-height: 1.8;
+  opacity: 0.8;
+}
+
+.jd-prose h1,
+.jd-prose h2,
+.jd-prose h3,
+.jd-prose h4 {
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: hsl(var(--on-surface));
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.jd-prose h1 { font-size: 2.5rem; }
+.jd-prose h2 { font-size: 1.875rem; }
+.jd-prose h3 { font-size: 1.5rem; }
+
+.jd-prose p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.jd-prose ul,
+.jd-prose ol {
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.jd-prose li {
+  margin: 0.5rem 0;
+}
+
+.jd-prose ul > li::marker { color: #00dc82; }
+.jd-prose ol > li::marker { color: hsl(var(--primary)); font-weight: 800; }
+
+.jd-prose a {
+  color: #00dc82;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 600;
+}
+.jd-prose a:hover { color: hsl(var(--primary)); }
+
+.jd-prose strong { font-weight: 900; color: hsl(var(--on-surface)); }
+
+.jd-prose code {
+  background: hsl(var(--surface-container));
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.jd-prose pre {
+  background: hsl(var(--surface-container));
+  border-radius: 1rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+.jd-prose pre code { background: transparent; padding: 0; }
+
+.jd-prose blockquote {
+  border-left: 4px solid #00dc82;
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: hsl(var(--on-surface-variant));
+  opacity: 0.7;
+  margin: 2rem 0;
+}
+
+.jd-prose hr {
+  border: none;
+  height: 2px;
+  background: hsl(var(--surface-container)); /* Use background instead of border */
+  margin: 3rem 0;
 }
