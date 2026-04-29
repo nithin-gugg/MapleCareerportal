@@ -39,13 +39,13 @@ export default async function JobDetailsPage({ params }: JobDetailsProps) {
               href="/jobs"
               className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors"
             >
-              Operational Inventory
+              Jobs
             </Link>
             <span className="material-symbols-outlined text-sm text-outline/30">
               chevron_right
             </span>
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary truncate">
-              Slot: {job.title}
+              Role: {job.title}
             </span>
           </div>
         </Container>
@@ -71,7 +71,7 @@ export default async function JobDetailsPage({ params }: JobDetailsProps) {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest opacity-40">
-                      Deployment Date
+                      Opened Date
                     </span>
                     <span className="text-sm font-black text-on-surface">
                       {new Date(job.createdAt).toLocaleDateString()}
@@ -86,10 +86,10 @@ export default async function JobDetailsPage({ params }: JobDetailsProps) {
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest opacity-40">
-                      Operational Zone
+                      Location
                     </span>
                     <span className="text-sm font-black text-on-surface">
-                      Universal Remote / Agnostic
+                      Hyderabad, Telangana
                     </span>
                   </div>
                 </div>
@@ -100,7 +100,7 @@ export default async function JobDetailsPage({ params }: JobDetailsProps) {
             <div className="space-y-10">
               <div className="flex items-center gap-4">
                 <h2 className="font-headline text-3xl font-black tracking-tight text-on-surface uppercase">
-                  Scope &amp; Requirements
+                  Requirements
                 </h2>
                 <div className="flex-1 h-px bg-surface-container" />
               </div>
@@ -133,14 +133,14 @@ export default async function JobDetailsPage({ params }: JobDetailsProps) {
                   fact_check
                 </span>
                 <h3 className="font-headline text-xl font-black uppercase tracking-tight text-on-surface">
-                  Slot Calibrations
+                  Application
                 </h3>
               </div>
 
               <div className="space-y-10">
                 <div>
                   <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant ml-2 mb-4">
-                    Required Resonance Patterns
+                    Required Skills
                   </h4>
                   <div className="flex flex-wrap gap-2.5">
                     {skills.map((skill: string) => (
@@ -170,8 +170,7 @@ export default async function JobDetailsPage({ params }: JobDetailsProps) {
                     </button>
                   </Link>
                   <p className="text-[9px] font-black text-on-surface-variant/40 text-center uppercase tracking-widest leading-relaxed">
-                    Neural evaluation results typically transmitted within 48
-                    operational hours
+                    Apply by submitting you resume and fill the details carefully. We will get back to you as soon as possible
                   </p>
                 </div>
               </div>
@@ -188,11 +187,10 @@ export default async function JobDetailsPage({ params }: JobDetailsProps) {
               </div>
               <div className="space-y-1">
                 <h4 className="text-xs font-black text-secondary uppercase tracking-[0.1em]">
-                  Protocol Referrals
+                  Employee Referrals
                 </h4>
                 <p className="text-[11px] font-medium text-on-surface-variant opacity-60 px-4">
-                  Identify and synchronize high-performance peers with this
-                  operational slot.
+                  If you have a friend who might be a good fit for this role, refer them to us.
                 </p>
               </div>
             </div>

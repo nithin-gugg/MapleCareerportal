@@ -67,7 +67,7 @@ export default async function AnalyticsPage() {
           label="Quality Quotient" 
           value={`${metrics.avgScore}%`} 
           subValue="AI Match Fidelity Index"
-          icon="psychometric_analysis"
+          icon="check"
         />
         <MetricCard 
           label="Processing Velocity" 

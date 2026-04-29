@@ -14,14 +14,14 @@ export default async function AdminJobsPage() {
              <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-primary">
                 <span className="material-symbols-outlined text-2xl">work_outline</span>
              </div>
-             <h1 className="font-headline text-4xl font-black tracking-tighter text-on-surface">Operational Slots</h1>
+             <h1 className="font-headline text-4xl font-black tracking-tighter text-on-surface">Job Role Slots</h1>
           </div>
-          <p className="text-on-surface-variant text-sm font-medium tracking-tight">Active Recruitment Pipeline Inventory v1.0</p>
+          <p className="text-on-surface-variant text-sm font-medium tracking-tight">Active Recruitment Inventory v1.0</p>
         </div>
         <Link href="/admin/jobs/create">
           <button className="btn-gradient text-on-primary font-headline font-black px-8 py-3.5 rounded-xl flex items-center gap-3 soft-scale shadow-lg shadow-primary/20 transition-all">
             <span className="material-symbols-outlined text-xl">add</span>
-            Configure New Slot
+            Create New Job
           </button>
         </Link>
       </div>

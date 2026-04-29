@@ -22,11 +22,15 @@ export function AdminSidebar({ user, logoutAction }: { user?: any, logoutAction:
     <aside className="w-64 h-screen fixed left-0 top-0 bg-surface-container-low flex flex-col border-r border-surface-container/30 z-50">
       <div className="px-8 py-10">
         <Link href="/admin" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center soft-scale">
-            <span className="material-symbols-outlined text-on-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>fluid</span>
+          <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center overflow-hidden soft-scale shadow-sm border border-surface-container/20">
+            <img 
+              src="/images/maple-admin-logo.png" 
+              alt="Maple Admin" 
+              className="w-full h-full object-contain p-1.5" 
+            />
           </div>
           <div className="flex flex-col">
-            <span className="font-headline font-black text-xl tracking-tighter text-on-surface leading-none">TalentFlow</span>
+            <span className="font-headline font-black text-xl tracking-tighter text-on-surface leading-none">Maple Edge</span>
             <span className="text-[10px] uppercase tracking-widest font-bold text-primary opacity-70">Admin Console</span>
           </div>
         </Link>

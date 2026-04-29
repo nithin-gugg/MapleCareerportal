@@ -20,15 +20,9 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between gap-6">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 rounded-lg bg-[#00dc82] flex items-center justify-center soft-scale shadow-lg shadow-[#00dc82]/20">
-               <span className="material-symbols-outlined text-[#051f18] text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>fluid</span>
+            <div className="w-38 h-12 flex items-center justify-center overflow-hidden">
+              <img src="/images/logo.png" alt="Maple Logo" className="w-full h-full object-contain p-1" />
             </div>
-            <span className={cn(
-              "font-headline font-black text-xl tracking-tighter transition-colors duration-500",
-              isHome ? "text-white" : "text-on-surface"
-            )}>
-              Maple <span className="text-[#00dc82]">HIRE</span>
-            </span>
           </Link>
           
           <nav className="hidden md:flex items-center gap-6">
@@ -48,12 +42,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="/admin" className={cn(
-            "text-sm font-bold transition-colors duration-500",
-            isHome ? "text-white/60 hover:text-white" : "text-on-surface-variant hover:text-on-surface"
-          )}>
-            Recruiter Login
-          </Link>
           <Link 
             href="/jobs" 
             className="bg-[#00dc82] text-[#051f18] text-[10px] font-black px-6 py-2.5 rounded-xl soft-scale shadow-xl shadow-[#00dc82]/10 uppercase tracking-[0.15em] transition-all hover:scale-105 active:scale-95"

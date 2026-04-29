@@ -37,7 +37,7 @@ export function JobCard({ job }: JobCardProps) {
       </div>
 
       <p className="text-sm text-on-surface-variant font-medium leading-relaxed tracking-tight opacity-60 line-clamp-3 mb-8 flex-1">
-        {job.description}
+        {job.description.replace(/<[^>]*>?/gm, '')}
       </p>
 
       <div className="space-y-8">

@@ -55,8 +55,8 @@ export default async function AdminDashboard({ searchParams }: AdminDashboardPro
                 <span className="material-symbols-outlined text-3xl">analytics</span>
              </div>
              <div>
-                <h1 className="font-headline text-4xl font-black tracking-tighter text-on-surface">Precision Dashboard</h1>
-                <p className="text-on-surface-variant font-body text-sm font-medium">Monitoring Talent Ecosystem v1.2</p>
+                <h1 className="font-headline text-4xl font-black tracking-tighter text-on-surface">Hiring Dashboard</h1>
+                <p className="text-on-surface-variant font-body text-sm font-medium">Monitoring Talent Applications</p>
              </div>
           </div>
         </div>
@@ -64,7 +64,7 @@ export default async function AdminDashboard({ searchParams }: AdminDashboardPro
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 w-full md:w-auto">
           <div className="bg-surface-container-lowest p-6 rounded-2xl soft-scale shadow-sm flex flex-col gap-2">
             <div className="flex items-center justify-between">
-               <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Total Intake</span>
+               <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Total Applicants</span>
                <span className="material-symbols-outlined text-primary text-xl">group</span>
             </div>
             <p className="text-3xl font-black text-on-surface tracking-tighter">{stats._count.id}</p>
@@ -158,7 +158,7 @@ export default async function AdminDashboard({ searchParams }: AdminDashboardPro
                       </td>
                       <td className="px-8 py-6">
                         <div className="flex flex-col">
-                           <span className="text-[11px] font-black text-on-surface uppercase tracking-tighter leading-tight">{app.job.title}</span>
+                           <span className="text-[13px] font-normal text-on-surface uppercase tracking-tighter leading-tight">{app.job.title}</span>
                            <span className="text-[9px] text-on-surface-variant font-bold uppercase tracking-widest leading-none">Internal Posting</span>
                         </div>
                       </td>

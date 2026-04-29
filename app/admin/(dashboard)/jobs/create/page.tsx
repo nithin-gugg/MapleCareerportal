@@ -57,15 +57,15 @@ export default function CreateJobPage() {
         <span className="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">
           arrow_back
         </span>
-        Operational Slots
+        Create Jobs
       </Link>
 
       <div className="space-y-3">
         <h1 className="font-headline text-4xl font-black tracking-tighter text-on-surface">
-          Configure Operational Slot
+          Create New Job role Vacancie
         </h1>
         <p className="text-on-surface-variant text-sm font-medium tracking-tight">
-          Deploy a new recruitment protocol into the active pipeline.
+          Add new Job role Vacancies .
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function CreateJobPage() {
               htmlFor="title"
               className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant ml-2"
             >
-              Slot Designation (Title)
+              Job Role (Title)
             </label>
             <div className="relative group">
               <span className="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors">
@@ -106,7 +106,7 @@ export default function CreateJobPage() {
                 htmlFor="type"
                 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant ml-2"
               >
-                Operational Classification
+                Job Classification
               </label>
               <div className="relative group">
                 <span className="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline group-focus-within:text-primary transition-colors">
@@ -129,7 +129,7 @@ export default function CreateJobPage() {
             </div>
             <div className="space-y-4">
               <label className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant ml-2">
-                Required Resonance Skills
+                Required Skills
               </label>
               <TagInput tags={skills} setTags={setSkills} />
             </div>
@@ -138,7 +138,7 @@ export default function CreateJobPage() {
           {/* ── Rich Text Description ───────────────────────────────────────── */}
           <div className="space-y-4">
             <label className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant ml-2">
-              Slot Requirements &amp; Protocol (Description)
+               Requirements & Responsibilities (Description)
             </label>
             <RichTextEditor
               value={description}
@@ -158,8 +158,7 @@ export default function CreateJobPage() {
         {/* ── Submit ─────────────────────────────────────────────────────────── */}
         <div className="pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 bg-surface-container-low/30 -mx-10 md:-mx-14 -mb-10 md:-mb-14 p-10 md:p-14">
           <p className="text-[10px] font-black text-on-surface-variant/40 uppercase tracking-widest italic max-w-xs text-center sm:text-left">
-            By publishing, you initiate the ingestion protocol for this specific
-            slot designation.
+            By publishing, you will create a new Job role
           </p>
           <button
             type="submit"
@@ -170,7 +169,7 @@ export default function CreateJobPage() {
             {isPending ? (
               <>
                 <span className="w-5 h-5 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />
-                <span>Executing Deployment...</span>
+                <span>Creating Job...</span>
               </>
             ) : (
               <>
@@ -180,7 +179,7 @@ export default function CreateJobPage() {
                 >
                   send
                 </span>
-                <span>Publish Slot</span>
+                <span>Publish Now</span>
               </>
             )}
           </button>

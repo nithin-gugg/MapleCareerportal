@@ -2,12 +2,14 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-const X = ({ size = 16 }: { size?: number }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
+import { ChevronDown, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface AdminFiltersProps {
   jobs: { id: string; title: string }[];
@@ -39,40 +41,57 @@ export function AdminFilters({ jobs }: AdminFiltersProps) {
     router.push("/admin");
   };
 
+  const currentJobId = searchParams.get("jobId") || "";
+  const currentStatus = searchParams.get("status") || "";
+  const currentJobTitle = jobs.find((j) => j.id === currentJobId)?.title || "All Positions";
+  const currentStatusLabel = currentStatus || "Any Status";
+
   return (
-    <div className="flex flex-wrap items-center gap-4 bg-zinc-950 p-4 border border-zinc-900 rounded-xl">
-      <div className="flex-1 min-w-[200px]">
-        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1 block">Job Role</label>
-        <select
-          value={searchParams.get("jobId") || ""}
-          onChange={(e) => handleFilterChange("jobId", e.target.value)}
-          className="w-full bg-zinc-900 border border-zinc-800 text-white rounded-none px-3 py-2 text-sm focus:outline-none focus:border-[#00DC82] transition-colors"
-        >
-          <option value="">All Positions</option>
-          {jobs.map((job) => (
-            <option key={job.id} value={job.id}>{job.title}</option>
-          ))}
-        </select>
+    <div className="flex flex-wrap items-center gap-6 bg-surface-container-lowest p-6 border border-surface-container/20 rounded-[2rem] shadow-sm">
+      <div className="flex-1 min-w-[200px] space-y-2">
+        <label className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60 block ml-1">Job Role</label>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-full justify-between h-11 rounded-xl bg-surface-container-low border-surface-container text-on-surface font-medium px-4">
+              <span className="truncate">{currentJobTitle}</span>
+              <ChevronDown className="ml-2 opacity-40 shrink-0" size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="min-w-[--radix-dropdown-menu-trigger-width] rounded-xl shadow-2xl border-surface-container/30">
+            <DropdownMenuItem onClick={() => handleFilterChange("jobId", "")}>
+              All Positions
+            </DropdownMenuItem>
+            {jobs.map((job) => (
+              <DropdownMenuItem key={job.id} onClick={() => handleFilterChange("jobId", job.id)}>
+                {job.title}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
-      <div className="flex-1 min-w-[150px]">
-        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1 block">Status</label>
-        <select
-          value={searchParams.get("status") || ""}
-          onChange={(e) => handleFilterChange("status", e.target.value)}
-          className="w-full bg-zinc-900 border border-zinc-800 text-white rounded-none px-3 py-2 text-sm focus:outline-none focus:border-[#00DC82] transition-colors"
-        >
-          <option value="">Any Status</option>
-          <option value="PENDING">Pending</option>
-          <option value="REVIEWED">Reviewed</option>
-          <option value="SHORTLISTED">Shortlisted</option>
-          <option value="REJECTED">Rejected</option>
-          <option value="OFFERED">Offered</option>
-        </select>
+      <div className="flex-1 min-w-[150px] space-y-2">
+        <label className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60 block ml-1">Status</label>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-full justify-between h-11 rounded-xl bg-surface-container-low border-surface-container text-on-surface font-medium px-4">
+              <span className="truncate">{currentStatusLabel}</span>
+              <ChevronDown className="ml-2 opacity-40 shrink-0" size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="min-w-[--radix-dropdown-menu-trigger-width] rounded-xl shadow-2xl border-surface-container/30">
+            <DropdownMenuItem onClick={() => handleFilterChange("status", "")}>Any Status</DropdownMenuItem>
+            {["PENDING", "REVIEWED", "SHORTLISTED", "REJECTED", "OFFERED"].map((status) => (
+              <DropdownMenuItem key={status} onClick={() => handleFilterChange("status", status)}>
+                {status.charAt(0) + status.slice(1).toLowerCase()}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
-      <div className="flex-1 min-w-[120px]">
-        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1 block">Min Score</label>
+      <div className="flex-1 min-w-[120px] space-y-2">
+        <label className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60 block ml-1">Min Score</label>
         <input
           type="number"
           min="0"
@@ -80,16 +99,16 @@ export function AdminFilters({ jobs }: AdminFiltersProps) {
           defaultValue={searchParams.get("score") || ""}
           onBlur={(e) => handleFilterChange("score", e.target.value)}
           placeholder="e.g. 70"
-          className="w-full bg-zinc-900 border border-zinc-800 text-white rounded-none px-3 py-2 text-sm focus:outline-none focus:border-[#00DC82] transition-colors"
+          className="w-full h-11 bg-surface-container-low border border-surface-container text-on-surface rounded-xl px-4 text-sm focus:outline-none focus:border-primary transition-all font-medium placeholder:opacity-30"
         />
       </div>
 
-      <div className="flex items-end h-full self-end pb-1">
+      <div className="flex items-end h-11 self-end">
         <button
           onClick={clearFilters}
-          className="flex items-center gap-2 text-[10px] font-black text-zinc-500 hover:text-white uppercase tracking-widest transition-colors px-2"
+          className="flex items-center gap-2 text-[10px] font-black text-on-surface-variant hover:text-error uppercase tracking-widest transition-all px-4 h-full hover:bg-error/5 rounded-xl"
         >
-          <X size={14} />
+          <X size={14} className="stroke-[3]" />
           Reset
         </button>
       </div>

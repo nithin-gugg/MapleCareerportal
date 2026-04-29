@@ -32,13 +32,13 @@ export function TagInput({ tags, setTags, placeholder = "Add skills...", classNa
 
   return (
     <div className={cn(
-      "flex flex-wrap items-center gap-2 p-2 min-h-[42px] w-full rounded-md border border-zinc-800 bg-zinc-950 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-[#00DC82] focus-within:ring-offset-2",
+      "flex flex-wrap items-center gap-2 p-2 min-h-[42px] w-full rounded-md border border-zinc-800 bg-white text-sm ring-offset-background focus-within:ring-2 focus-within:ring-[#00DC82] focus-within:ring-offset-2",
       className
     )}>
       {tags.map((tag) => (
         <span
           key={tag}
-          className="flex items-center gap-1 px-2 py-1 bg-[#00DC82]/10 text-[#00DC82] border border-[#00DC82]/20 rounded-md text-xs font-medium"
+          className="flex items-center gap-1 px-2 py-1 bg-[#00DC82]/10 text-[#000000] border border-[#000000]/80 rounded-md text-m font-bold"
         >
           {tag}
           <button

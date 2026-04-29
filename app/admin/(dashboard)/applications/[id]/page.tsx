@@ -101,14 +101,14 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
                   <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
                 </div>
                 <div>
-                  <h2 className="font-headline text-2xl font-black tracking-tight text-on-surface">Cognitive Match Analysis</h2>
-                  <p className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60">High-Fidelity Neural Scoring Engine</p>
+                  <h2 className="font-headline text-2xl font-black tracking-tight text-on-surface">Resume Score Analysis</h2>
+                  <p className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60">High-Fidelity Resume Scoring Engine</p>
                 </div>
               </div>
               {application.score !== null && (
                 <div className="text-right flex flex-col items-end">
                   <div className="text-5xl font-black text-primary leading-none tracking-tighter">{application.score}%</div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/70 mt-2 bg-primary/5 px-3 py-1 rounded-full">Convergence Index</div>
+                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/70 mt-2 bg-primary/5 px-3 py-1 rounded-full">Match Score</div>
                 </div>
               )}
             </div>
@@ -159,11 +159,11 @@ export default async function ApplicationDetailPage({ params }: ApplicationDetai
                 href={application.resumeLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between group/btn w-full px-8 py-5 bg-on-surface text-surface rounded-[1.25rem] font-headline font-black uppercase tracking-[0.2em] text-[10px] hover:bg-primary hover:text-on-primary transition-all duration-300 shadow-xl shadow-black/5 soft-scale"
+                className="flex items-center justify-between group/btn w-full px-8 py-5 bg-primary text-white rounded-[1.25rem] font-headline font-normal uppercase tracking-[0.2em] text-[10px] transition-transform duration-300 shadow-xl shadow-black/5 hover:scale-102"
               >
                 <div className="flex items-center gap-4">
                    <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>description</span>
-                   <span>Inspect Original Document</span>
+                   <span>View Resume</span>
                 </div>
                 <span className="material-symbols-outlined group-hover/btn:translate-x-1 transition-transform">open_in_new</span>
               </a>

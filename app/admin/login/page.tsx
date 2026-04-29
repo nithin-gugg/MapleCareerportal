@@ -31,13 +31,17 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Brand Logo / Identity */}
         <div className="mb-12 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-container mb-4 shadow-lg shadow-primary/10">
-            <span className="material-symbols-outlined text-on-primary-container text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>fluid</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-black mb-4 shadow-lg shadow-black/10">
+            <img 
+              src="/images/maple-admin-logo.png" 
+              alt="Maple Admin" 
+              className="w-full h-full object-contain p-1" 
+            />
           </div>
           <h1 className="font-headline text-3xl font-black tracking-tighter text-on-surface">
-            TalentFlow <span className="text-primary">Admin</span>
+            Maple Edge HRMS <span className="text-primary">Admin</span>
           </h1>
-          <p className="mt-2 text-on-surface-variant font-body text-sm font-medium tracking-tight">Precision Vitality in Workforce Management</p>
+          <p className="mt-2 text-on-surface-variant font-body text-sm font-medium tracking-tight">Only Admin of Maple Edged is allowed</p>
         </div>
 
         {/* Login Card */}
@@ -112,7 +116,7 @@ export default function AdminLoginPage() {
                    <span className="material-symbols-outlined animate-spin">refresh</span>
                 ) : (
                   <>
-                    <span>Secure Access</span>
+                    <span>Login</span>
                     <span className="material-symbols-outlined text-lg">login</span>
                   </>
                 )}
@@ -137,7 +141,7 @@ export default function AdminLoginPage() {
 
         <div className="mt-8 text-center px-4">
           <p className="text-[10px] text-outline-variant leading-relaxed font-medium">
-            By continuing, you agree to TalentFlow&apos;s Internal Policy and Security protocols. Unauthorized access attempts are monitored and recorded.
+            By continuing, you agree to Maple Edge HRMS&apos;s Internal Policy and Security protocols. Unauthorized access attempts are monitored and recorded.
           </p>
         </div>
       </div>
